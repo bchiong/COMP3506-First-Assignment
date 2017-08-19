@@ -40,14 +40,14 @@ public interface GameList<T> {
 	 * @throws IndexOutOfBoundsException If an attempt is made to remove an element from an empty list.
 	 */
 	void remove() throws IndexOutOfBoundsException;
-	
+
 	/**
 	 * Move the internal cursor to the first element in the list.
-	 * 
+	 *
 	 * @return The item at the first position in the list; null if the list is empty.
 	 */
 	T getFirst();
-	
+
 	/**
 	 * Move the internal cursor to the next element in sequential order in the list.
 	 * If the cursor is at the end of the list it remains at that position, and returns the item at that position.
@@ -87,12 +87,14 @@ public interface GameList<T> {
 	 * @return true if the list is empty (has no elements); false otherwise.
 	 */
 	boolean isEmpty();
-	
+
 	/**
 	 * Indicates if the cursor is at the last element in the list.
 	 * Will return false if the list is empty.
-	 * 
+	 *
 	 * @return true if the cursor position is the last element in the list; false otherwise.
 	 */
-	boolean isLast();
+	default boolean isLast() {
+		return false;
+	}
 }
