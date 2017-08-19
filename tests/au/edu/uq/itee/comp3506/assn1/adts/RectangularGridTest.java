@@ -1,8 +1,8 @@
 package au.edu.uq.itee.comp3506.assn1.adts;
 
 import static org.junit.Assert.assertThat;
-//import static org.hamcrest.CoreMatchers.is;
-//import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.junit.Before;
 import org.junit.Test;
