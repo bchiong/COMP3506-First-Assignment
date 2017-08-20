@@ -5,6 +5,7 @@ public class RectangularGrid<T> implements Grid<T> {
 
     // Initializer
     T[][] data;
+    T returnValue;
     private int rowSize;
     private int columnSize;
 
@@ -24,22 +25,22 @@ public class RectangularGrid<T> implements Grid<T> {
     public void place(T item, int x, int y) {
         for (int i = 0; i <= y; i++) {
             for (int j = 0; j <= x; j++) {
-                // insert T element in 2D array
-                data[x][y] = item;
+                data[y][x] = item;
             }
         }
     }
 
     // Get an element
     public T get(int x, int y) {
-        if (rowSize <= x && columnSize <= y) {
-            for (int i = 0; i < x; i++) {
-                for (int j = 0; j < y; j++) {
+        if ((x == 0 && y == 0) || (rowSize <= x && columnSize <= y)) {
+            for (int i = 0; i <= x; i++) {
+                for (int j = 0; j <= y; j++) {
+                    returnValue = data[x][y];
                 }
             }
         } else {
             throw new ArrayIndexOutOfBoundsException("Coordinates cannot be accessed");
         }
-        return null;
+        return returnValue;
     }
 }
