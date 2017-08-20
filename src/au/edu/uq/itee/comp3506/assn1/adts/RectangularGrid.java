@@ -5,16 +5,19 @@ public class RectangularGrid<T> implements Grid<T> {
 
     // Initializer
     T[][] data;
+    private int rowSize;
+    private int columnSize;
 
     // Constructor
     public RectangularGrid(int a, int b) {
+        columnSize = b;
+        rowSize = a;
 
         if (a == 0 && b == 0) {
             throw new IllegalArgumentException("Pick a number greater than 0");
+        } else {
+            data = (T[][]) new Object[a][b];
         }
-
-        data = (T[][]) new Object[a][b];
-
     }
 
     // Place an element
@@ -29,12 +32,13 @@ public class RectangularGrid<T> implements Grid<T> {
 
     // Get an element
     public T get(int x, int y) {
-//        if (a <= x && b <= y) {
-//
-//        }
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
+        if (rowSize <= x && columnSize <= y) {
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
+                }
             }
+        } else {
+            throw new ArrayIndexOutOfBoundsException("Coordinates cannot be accessed");
         }
         return null;
     }
