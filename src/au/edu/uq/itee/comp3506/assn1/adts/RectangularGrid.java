@@ -5,15 +5,14 @@ public class RectangularGrid<T> implements Grid<T> {
 
     // Initializer
     T[][] data;
-    T returnValue;
+    private T returnValue;
     private int rowSize;
     private int columnSize;
 
     // Constructor
     public RectangularGrid(int a, int b) {
-        columnSize = b;
         rowSize = a;
-
+        columnSize = b;
         if (a == 0 && b == 0) {
             throw new IllegalArgumentException("Pick a number greater than 0");
         } else {
@@ -32,10 +31,10 @@ public class RectangularGrid<T> implements Grid<T> {
 
     // Get an element
     public T get(int x, int y) {
-        if ((x == 0 && y == 0) || (rowSize <= x && columnSize <= y)) {
+        if ((x == 0 && y == 0) || ( x <= rowSize && y <= columnSize)) {
             for (int i = 0; i <= x; i++) {
                 for (int j = 0; j <= y; j++) {
-                    returnValue = data[x][y];
+                    returnValue = data[y][x];
                 }
             }
         } else {
