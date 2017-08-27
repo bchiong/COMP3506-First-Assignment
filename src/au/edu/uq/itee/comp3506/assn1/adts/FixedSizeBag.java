@@ -2,6 +2,8 @@ package au.edu.uq.itee.comp3506.assn1.adts;
 
 
 public class FixedSizeBag<T> implements RemovableBag<T> {
+
+    int cursor = 0;
     T[] bagArray;
 
     /**
@@ -31,12 +33,16 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
 
     @Override
     public T firstItem() {
-        return null;
+        return bagArray[0];
     }
 
     @Override
     public T nextItem() {
-        return null;
+        if (bagArray != null && bagArray.length != 1) {
+            return bagArray[cursor + 1];
+        } else {
+            throw new ArrayIndexOutOfBoundsException("No next element");
+        }
     }
 
     @Override
@@ -46,6 +52,12 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
 
     @Override
     public int size() {
-        return 0;
+        int size_count = 0;
+        for (T item : bagArray) {
+            if (item != null) {
+                size_count = size_count + 1;
+            }
+        }
+        return size_count;
     }
 }
