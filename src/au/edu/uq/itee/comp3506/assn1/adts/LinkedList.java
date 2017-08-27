@@ -1,5 +1,8 @@
 package au.edu.uq.itee.comp3506.assn1.adts;
 
+import au.edu.uq.itee.comp3506.assn1.gameworld.GameObject;
+
+import java.lang.*;
 
 public class LinkedList<T> implements GameList<T> {
 
@@ -150,6 +153,14 @@ public class LinkedList<T> implements GameList<T> {
 
     @Override
     public boolean find(T item) {
+        for (int i = 0; i < newData.length; i++) {
+            String compare = newData[i].toString();
+            if (compare.equals(item.toString())) {
+                cursor = i;
+                return true;
+            }
+        }
+        cursor = newData.length;
         return false;
     }
 
