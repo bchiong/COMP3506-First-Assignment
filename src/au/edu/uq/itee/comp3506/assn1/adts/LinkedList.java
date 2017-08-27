@@ -4,7 +4,7 @@ package au.edu.uq.itee.comp3506.assn1.adts;
 public class LinkedList<T> implements GameList<T> {
 
 
-    // cursor
+    // Cursor
     private int cursor = 0;
     // Constructor
     public T[] data;
@@ -12,12 +12,18 @@ public class LinkedList<T> implements GameList<T> {
     public T[] backup;
 
 
-    private void copy(T[] data) {
+    private void copy(T[] data, boolean condition) {
         int size;
         size = newData.length;
         backup = newData.clone();
         newData = null;
-        newData = (T[]) new Object[size + 1];
+
+        if (condition == true) {
+            newData = (T[]) new Object[size + 1];
+        } else {
+            newData = (T[]) new Object[size - 1];
+        }
+
     }
 
     @Override
@@ -29,7 +35,7 @@ public class LinkedList<T> implements GameList<T> {
             cursor = 0;
         } else if (newData != null) {
             size = newData.length;
-            copy(newData);
+            copy(newData, true);
             for (int i = 0; i < size; i++) {
                 newData[i] = backup[i];
             }
@@ -50,7 +56,7 @@ public class LinkedList<T> implements GameList<T> {
     @Override
     public boolean isLast() {
         boolean return_value = false;
-        if ((data != null && newData == null)|| cursor == newData.length - 1) {
+        if ((data != null && newData == null) || cursor == newData.length - 1) {
             return true;
         } else if (data == null && newData == null) {
             return_value = false;
@@ -67,7 +73,7 @@ public class LinkedList<T> implements GameList<T> {
             cursor = 0;
         } else {
             cursor = (cursor == 0) ? cursor = 0 : cursor - 1;
-            copy(newData);
+            copy(newData, true);
             // Taken from stackoverflow
             for (int i = 0; i < cursor; i++) {
                 newData[i] = backup[i];
@@ -81,7 +87,17 @@ public class LinkedList<T> implements GameList<T> {
 
     @Override
     public void remove() throws IndexOutOfBoundsException {
+        copy(newData, false);
+        if (isLast() == true) {
+            cursor = cursor - 1;
+        }
 
+        for (int i = 0; i < cursor; i++) {
+            newData[i] = backup[i];
+        }
+        for (int i = cursor + 1; i < newData.length; i++) {
+            newData[i - 1] = backup[i];
+        }
     }
 
     @Override
@@ -95,7 +111,8 @@ public class LinkedList<T> implements GameList<T> {
 
     @Override
     public T getNext() {
-        return null;
+        cursor = cursor + 1;
+        return newData[cursor];
     }
 
     @Override
@@ -114,7 +131,8 @@ public class LinkedList<T> implements GameList<T> {
 
     @Override
     public T getPrevious() {
-        return null;
+        cursor = cursor - 1;
+        return newData[cursor];
     }
 
     @Override
@@ -126,10 +144,7 @@ public class LinkedList<T> implements GameList<T> {
     public boolean isEmpty() {
         if (data == null && newData == null) {
             return true;
-//        } else if (data.length == 0) {
-//            return true;
-//        }
-          } else {
+        } else {
             return false;
         }
     }

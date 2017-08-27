@@ -34,4 +34,21 @@ public class MyLinkedListTest {
 		assertThat("The last item added to the list is not the last item in the list.",
 				list.getLast(), is(equalTo(item3ToAdd)));
 	}
+
+	@Test
+	public void removeItem() {
+		GameObject item1ToAdd = new GameObject("Item 1");
+		GameObject item2ToAdd = new GameObject("Item 2");
+		GameObject item3ToAdd = new GameObject("Item 3");
+		list.addToEnd(item1ToAdd);
+		list.addToEnd(item2ToAdd);
+		list.addToEnd(item3ToAdd);
+		list.remove();
+		assertThat("Adding multiple items to end of list did not result in the last one being the last item.",
+				list.isLast(), is(equalTo(true)));
+		assertThat("The first item added to the list is not the first item in the list.",
+				list.getFirst(), is(equalTo(item1ToAdd)));
+		assertThat("The last item added to the list is not the last item in the list.",
+				list.getLast(), is(equalTo(item2ToAdd)));
+	}
 }
