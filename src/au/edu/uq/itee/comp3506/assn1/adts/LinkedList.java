@@ -32,6 +32,7 @@ public class LinkedList<T> implements GameList<T> {
     @Override
     public void addToEnd(T item) {
         int size;
+        // TODO: Refactor
         if (data == null) {
             data = (T[]) new Object[1];
             data[0] = item;
@@ -153,6 +154,7 @@ public class LinkedList<T> implements GameList<T> {
 
     @Override
     public boolean find(T item) {
+        // TODO: rewrite for to foreach
         for (int i = 0; i < newData.length; i++) {
             String compare = newData[i].toString();
             if (compare.equals(item.toString())) {
