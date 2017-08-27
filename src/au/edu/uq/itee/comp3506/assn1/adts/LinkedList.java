@@ -87,17 +87,19 @@ public class LinkedList<T> implements GameList<T> {
 
     @Override
     public void remove() throws IndexOutOfBoundsException {
-        copy(newData, false);
+        int pos = cursor;
+        // Check if cursor is in the last instance, before copying
         if (isLast() == true) {
             cursor = cursor - 1;
         }
-
-        for (int i = 0; i < cursor; i++) {
+        copy(newData, false);
+        for (int i = 0; i < pos; i++) {
             newData[i] = backup[i];
         }
         for (int i = cursor + 1; i < newData.length; i++) {
             newData[i - 1] = backup[i];
         }
+
     }
 
     @Override
@@ -105,14 +107,19 @@ public class LinkedList<T> implements GameList<T> {
         if (newData == null) {
             return data[0];
         } else {
+            cursor = 0;
             return newData[0];
         }
     }
 
     @Override
     public T getNext() {
-        cursor = cursor + 1;
-        return newData[cursor];
+        if (newData != null && isLast() == false) {
+            cursor = cursor + 1;
+            return newData[cursor];
+        } else {
+            throw new ArrayIndexOutOfBoundsException("No next element");
+        }
     }
 
     @Override
@@ -120,10 +127,12 @@ public class LinkedList<T> implements GameList<T> {
         int index;
         T last;
         if (newData == null) {
+            cursor = 0;
             index = data.length - 1;
             last = data[index];
         } else {
             index = newData.length - 1;
+            cursor = index;
             last = newData[index];
         }
         return last;
@@ -131,8 +140,12 @@ public class LinkedList<T> implements GameList<T> {
 
     @Override
     public T getPrevious() {
-        cursor = cursor - 1;
-        return newData[cursor];
+        if (cursor != 0) {
+            cursor = cursor - 1;
+            return newData[cursor];
+        } else {
+            throw new ArrayIndexOutOfBoundsException("No previous element");
+        }
     }
 
     @Override

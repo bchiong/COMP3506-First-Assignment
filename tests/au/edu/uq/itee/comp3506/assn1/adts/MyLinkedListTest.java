@@ -51,4 +51,44 @@ public class MyLinkedListTest {
 		assertThat("The last item added to the list is not the last item in the list.",
 				list.getLast(), is(equalTo(item2ToAdd)));
 	}
+
+	@Test
+	public void getNextItem() {
+		GameObject item1ToAdd = new GameObject("Item 1");
+		GameObject item2ToAdd = new GameObject("Item 2");
+		GameObject item3ToAdd = new GameObject("Item 3");
+		list.addToEnd(item1ToAdd);
+		list.addToEnd(item2ToAdd);
+		list.addToEnd(item3ToAdd);
+		list.getFirst();
+		assertThat("The last item added to the list is not the last item in the list.",
+				list.getNext(), is(equalTo(item2ToAdd)));
+	}
+
+	@Test (expected = ArrayIndexOutOfBoundsException.class)
+	public void getNextItem2() {
+		GameObject item1ToAdd = new GameObject("Item 1");
+		list.addToEnd(item1ToAdd);
+		list.getNext();
+	}
+
+	@Test
+	public void getPreviousItem() {
+		GameObject item1ToAdd = new GameObject("Item 1");
+		GameObject item2ToAdd = new GameObject("Item 2");
+		GameObject item3ToAdd = new GameObject("Item 3");
+		list.addToEnd(item1ToAdd);
+		list.addToEnd(item2ToAdd);
+		list.addToEnd(item3ToAdd);
+		list.getLast();
+		assertThat("The last item added to the list is not the last item in the list.",
+				list.getPrevious(), is(equalTo(item2ToAdd)));
+	}
+
+	@Test (expected = ArrayIndexOutOfBoundsException.class)
+	public void getPreviousItem2() {
+		GameObject item1ToAdd = new GameObject("Item 1");
+		list.addToEnd(item1ToAdd);
+		list.getPrevious();
+	}
 }
