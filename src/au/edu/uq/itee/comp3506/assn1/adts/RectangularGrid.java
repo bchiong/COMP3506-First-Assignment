@@ -28,14 +28,10 @@ public class RectangularGrid<T> implements Grid<T> {
      * @param x X Coordinate of the position of the item.
      * @param y Y Coordinate of the position of the item.
      *          Loop through the grid with a nested loop
-     *          Run-time efficiency: O(n^2) quadratic
+     *          Run-time efficiency: O(1) constant
      */
     public void place(T item, int x, int y) {
-        for (int i = 0; i <= y; i++) {
-            for (int j = 0; j <= x; j++) {
                 data[y][x] = item;
-            }
-        }
     }
 
     /**

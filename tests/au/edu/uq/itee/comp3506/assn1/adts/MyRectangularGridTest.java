@@ -20,7 +20,7 @@ public class MyRectangularGridTest {
      */
     @Before
     public void setupRectangularGrid() {
-        grid = new RectangularGrid<GameObject>(6, 6);
+        grid = new RectangularGrid<GameObject>(6, 8);
     }
 
     @Test
@@ -42,6 +42,31 @@ public class MyRectangularGridTest {
         GameObject itemToInsert = new GameObject("Elixir");
         grid.place(itemToInsert, 6, 5);
         grid.get(7, 5);
+    }
+
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    public void invalidGridAccess3() {
+        grid.get(3, 9);
+    }
+
+    @Test
+    public void validGridAccess2() {
+        GameObject itemToInsert = new GameObject("Broadsword");
+        GameObject itemRetrieved;
+        grid.place(itemToInsert, 3, 2);
+        itemRetrieved = grid.get(3, 2);
+        assertThat("Item retrieved does not match item inserted at the same position",
+                itemToInsert, is(equalTo(itemRetrieved)));
+    }
+
+    @Test
+    public void validGridAccess3() {
+        GameObject itemToInsert = new GameObject("Broadsword");
+        GameObject itemRetrieved;
+        grid.place(itemToInsert, 5, 4);
+        itemRetrieved = grid.get(5, 4);
+        assertThat("Item retrieved does not match item inserted at the same position",
+                itemToInsert, is(equalTo(itemRetrieved)));
     }
 
 }
