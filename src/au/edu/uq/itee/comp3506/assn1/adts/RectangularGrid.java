@@ -14,8 +14,8 @@ public class RectangularGrid<T> implements Grid<T> {
      * @param b Size of column
      */
     public RectangularGrid(int a, int b) {
-        rowSize = a;
-        columnSize = b;
+        rowSize = b;
+        columnSize = a;
         if (a == 0 && b == 0) {
             throw new IllegalArgumentException("Pick a number greater than 0");
         } else {
@@ -46,7 +46,7 @@ public class RectangularGrid<T> implements Grid<T> {
      *           Run-time efficiency: O(n^2) or (length ^ 2) in this case.
      */
     public T get(int x, int y) {
-        if ((x == 0 && y == 0) || ( x <= rowSize && y <= columnSize)) {
+        if ((x == 0 && y == 0) || (y <= rowSize && x <= columnSize)) {
             for (int i = 0; i <= x; i++) {
                 for (int j = 0; j <= y; j++) {
                     returnValue = data[y][x];

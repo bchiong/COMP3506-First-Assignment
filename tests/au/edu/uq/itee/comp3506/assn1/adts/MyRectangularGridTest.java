@@ -14,11 +14,6 @@ import org.junit.Test;
 public class MyRectangularGridTest {
     private RectangularGrid<GameObject> grid;
 
-    @Test
-    public void test() {
-        fail("Not yet implemented");
-    }
-
     /**
      * Create a small RectangularGrid to be used for testing.
      * The grid is 6 cells in length and 6 cells in width.
@@ -42,14 +37,11 @@ public class MyRectangularGridTest {
                 firstItemRetrieved, not(secondItemRetrieved));
     }
 
-    @Test
-    public void testRowLength() {
-
-        int expectedRowLength = 6;
-        int test = grid.data.length;
-      //  int actualColumnLength = grid.data[0].length;
-        assertThat("Rows are the correct size",
-                expectedRowLength, is(equalTo(test)));
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    public void invalidGridAccess2() {
+        GameObject itemToInsert = new GameObject("Elixir");
+        grid.place(itemToInsert, 6, 5);
+        grid.get(7, 5);
     }
 
 }
