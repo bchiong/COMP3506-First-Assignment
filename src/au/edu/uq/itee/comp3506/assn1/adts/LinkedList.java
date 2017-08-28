@@ -7,14 +7,20 @@ import java.lang.*;
 public class LinkedList<T> implements GameList<T> {
 
 
-    // Cursor
     private int cursor = 0;
-    // Constructor
     public T[] data;
     public T[] newData;
     public T[] backup;
 
 
+    /**
+     * @param data      array
+     * @param condition add/minus based on condition
+     *
+     * Clone current array, destroy current array then
+     * instantiate an element bigger than the previous one
+     * Run-time efficiency: O(n) linear
+     */
     private void copy(T[] data, boolean condition) {
         int size;
         size = newData.length;
@@ -29,6 +35,10 @@ public class LinkedList<T> implements GameList<T> {
 
     }
 
+    /**
+     * @param item The item to be added to the list.
+     * Run-time efficiency : O(n) linear
+     */
     @Override
     public void addToEnd(T item) {
         int size;
@@ -57,6 +67,10 @@ public class LinkedList<T> implements GameList<T> {
 
     }
 
+    /**
+     * @return boolean
+     * Checks if the cursor points to the last element
+     */
     @Override
     public boolean isLast() {
         boolean return_value = false;
@@ -68,6 +82,13 @@ public class LinkedList<T> implements GameList<T> {
         return return_value;
     }
 
+    /**
+     * @param item The item to be inserted into the list.
+     *
+     * Reference:
+     * https://stackoverflow.com/questions/11638123/how-to-add-an-element-to-array-and-shift-indexes
+     * Time complexity: O(n^2) Quadratic
+     */
     @Override
     public void insert(T item) {
         if (data == null) {
@@ -78,7 +99,7 @@ public class LinkedList<T> implements GameList<T> {
         } else {
             cursor = (cursor == 0) ? cursor = 0 : cursor - 1;
             copy(newData, true);
-            // Taken from stackoverflow
+            // Add an element to an array and shift indexes.
             for (int i = 0; i < cursor; i++) {
                 newData[i] = backup[i];
             }
@@ -89,6 +110,10 @@ public class LinkedList<T> implements GameList<T> {
         }
     }
 
+    /**
+     * @throws IndexOutOfBoundsException
+     * Run-time efficiency: O(n^2) Quadratic
+     */
     @Override
     public void remove() throws IndexOutOfBoundsException {
         int pos = cursor;
@@ -106,6 +131,11 @@ public class LinkedList<T> implements GameList<T> {
 
     }
 
+    /**
+     * @return T
+     * Retrieves the the element at index 0.
+     * 
+     */
     @Override
     public T getFirst() {
         if (newData == null) {
@@ -116,6 +146,11 @@ public class LinkedList<T> implements GameList<T> {
         }
     }
 
+    /**
+     * @return T
+     * Throws ArrayIndexOutOfBoundsException
+     * Run-time complexity: O(1) Constant
+     */
     @Override
     public T getNext() {
         if (newData != null && isLast() == false) {
@@ -126,6 +161,11 @@ public class LinkedList<T> implements GameList<T> {
         }
     }
 
+    /**
+     * @return T
+     * Retrieves the element at size - 1 index.
+     * Run-time complexity: O(1) Constant
+     */
     @Override
     public T getLast() {
         int index;
@@ -142,6 +182,11 @@ public class LinkedList<T> implements GameList<T> {
         return last;
     }
 
+    /**
+     * @return T
+     * Retrieves the element at cursor + 1.
+     * Run-time complexity: O(1) Constant
+     */
     @Override
     public T getPrevious() {
         if (cursor != 0) {
@@ -152,6 +197,11 @@ public class LinkedList<T> implements GameList<T> {
         }
     }
 
+    /**
+     * @return Boolean
+     * Iterates the array and compare strings
+     * Run-time complexity: O(n) linear
+     */
     @Override
     public boolean find(T item) {
         // TODO: rewrite for to foreach
@@ -166,6 +216,11 @@ public class LinkedList<T> implements GameList<T> {
         return false;
     }
 
+    /**
+     * @return Boolean
+     *
+     * Run-time complexit: O(n) constant
+     */
     @Override
     public boolean isEmpty() {
         if (data == null && newData == null) {

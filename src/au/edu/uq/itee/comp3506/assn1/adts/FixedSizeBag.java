@@ -21,6 +21,13 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
         bagArray = (T[]) new Object[size];
     }
 
+    /**
+     * @param item The item to be added.
+     * @return boolean
+     * True if successfully added
+     *
+     * Run-time efficiency: Constant time
+     */
     @Override
     public boolean add(T item) {
         boolean return_value;
@@ -28,12 +35,19 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
             bagArray[cursor] = item;
             return_value = true;
             cursor = cursor + 1;
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             return false;
         }
         return return_value;
     }
 
+    /**
+     * @param item The item to be removed.
+     * @return boolean
+     * True if successfully removed
+     *
+     * Run-time efficiency: O(n) linear
+     */
     @Override
     public boolean remove(T item) {
         boolean return_value = false;
@@ -46,11 +60,23 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
         return return_value;
     }
 
+    /**
+     * @return T
+     * first item in the bag
+     *
+     * Run-time efficiency: Constant time (TBD)
+     */
     @Override
     public T firstItem() {
         return bagArray[0]; // not necessarily the first element
     }
 
+    /**
+     * @return T
+     * next item in the bag
+     *
+     * Run-time efficiency: Constant time
+     */
     @Override
     public T nextItem() {
         if (bagArray != null && bagArray.length != 1) {
@@ -60,6 +86,12 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
         }
     }
 
+    /**
+     * @return boolean
+     * if the cursor points to the last element
+     *
+     * Run-time efficiency: O(n) linear
+     */
     @Override
     public boolean isLast() {
         int last = 0;
@@ -74,6 +106,12 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
         return false;
     }
 
+    /**
+     * @return int
+     * total non-null elements
+     *
+     * Run-time efficiency: O(n) linear
+     */
     @Override
     public int size() {
         int size_count = 0;
