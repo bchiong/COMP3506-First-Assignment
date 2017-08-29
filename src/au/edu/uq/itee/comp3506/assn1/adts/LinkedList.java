@@ -1,7 +1,5 @@
 package au.edu.uq.itee.comp3506.assn1.adts;
 
-import au.edu.uq.itee.comp3506.assn1.gameworld.GameObject;
-
 import java.lang.*;
 
 public class LinkedList<T> implements GameList<T> {
@@ -10,12 +8,16 @@ public class LinkedList<T> implements GameList<T> {
     private int cursor = 0;
     public T[] data;
     public T[] newData;
-    public T[] backup;
+    public T[] cloned;
 
 
     /**
      * @param data      array
      * @param condition add/minus based on condition
+     *
+     * Reference:
+     * Jinguy. (n.d.). Empty an array in Java / processing - Stack Overflow.
+     * Retrieved from https://stackoverflow.com/questions/4208655/empty-an-array-in-java-processing
      *
      * Clone current array, destroy current array then
      * instantiate an element bigger than the previous one
@@ -24,7 +26,7 @@ public class LinkedList<T> implements GameList<T> {
     private void copy(T[] data, boolean condition) {
         int size;
         size = newData.length;
-        backup = newData.clone();
+        cloned = newData.clone();
         newData = null;
 
         if (condition == true) {
@@ -34,6 +36,11 @@ public class LinkedList<T> implements GameList<T> {
         }
 
     }
+    /**
+     * Justification
+     * The method allows reuse of the same array name by cloning current array
+     * and destroying the current array.
+     */
 
     /**
      * @param item The item to be added to the list.
@@ -51,7 +58,7 @@ public class LinkedList<T> implements GameList<T> {
             size = newData.length;
             copy(newData, true);
             for (int i = 0; i < size; i++) {
-                newData[i] = backup[i];
+                newData[i] = cloned[i];
             }
             newData[size] = item;
             cursor = size;
@@ -64,8 +71,13 @@ public class LinkedList<T> implements GameList<T> {
             newData[size] = item;
             cursor = size;
         }
-
     }
+    /**
+     * Justification
+     * Instead of initialising the array with an arbitrary length,
+     * the method increments the lenght of the re-instantiated array.
+     *
+     */
 
     /**
      * @return boolean
@@ -86,7 +98,9 @@ public class LinkedList<T> implements GameList<T> {
      * @param item The item to be inserted into the list.
      *
      * Reference:
-     * https://stackoverflow.com/questions/11638123/how-to-add-an-element-to-array-and-shift-indexes
+     * Jrad. (n.d.). java - How to add an element to Array and shift indexes?
+     * - Stack Overflow. Retrieved from https://stackoverflow.com/questions/11638123/
+     * how-to-add-an-element-to-array-and-shift-indexes
      * Time complexity: O(n^2) Quadratic
      */
     @Override
@@ -99,16 +113,27 @@ public class LinkedList<T> implements GameList<T> {
         } else {
             cursor = (cursor == 0) ? cursor = 0 : cursor - 1;
             copy(newData, true);
-            // Add an element to an array and shift indexes.
+            // Jrad. (n.d.). Add an element to an array and shift indexes.
             for (int i = 0; i < cursor; i++) {
-                newData[i] = backup[i];
+                newData[i] = cloned[i];
             }
             newData[cursor] = item;
             for (int i = cursor + 1; i < newData.length; i++) {
-                newData[i] = backup[i - 1];
+                newData[i] = cloned[i - 1];
             }
         }
     }
+
+    /**
+     * Justification
+     * Run-time is inefficient as it uses copy function which is linear. This is to be multiplied
+     * by the for-loop that reassigns all the elements from the cloned array.
+     * This results to a quadratic (n^2) runtime complexity. The other option would be to
+     * arbitrarily assign a big number for the length of the array however this would be
+     * inefficient in terms of space. I chose space efficiency over time.
+     * Game levels are created only as needed and would not hold a huge number of levels while the
+     * game is running. This is a better design choice as each floor is randomly generated.
+     */
 
     /**
      * @throws IndexOutOfBoundsException
@@ -123,10 +148,10 @@ public class LinkedList<T> implements GameList<T> {
         }
         copy(newData, false);
         for (int i = 0; i < pos; i++) {
-            newData[i] = backup[i];
+            newData[i] = cloned[i];
         }
         for (int i = cursor + 1; i < newData.length; i++) {
-            newData[i - 1] = backup[i];
+            newData[i - 1] = cloned[i];
         }
 
     }
@@ -145,6 +170,12 @@ public class LinkedList<T> implements GameList<T> {
             return newData[0];
         }
     }
+    /**
+     * Justification
+     * Removing and adding an element won't allow any null elements with copy(),
+     * it would be safe to assume the first element in the array is always
+     * in index zero.
+     */
 
     /**
      * @return T
@@ -170,6 +201,7 @@ public class LinkedList<T> implements GameList<T> {
     public T getLast() {
         int index;
         T last;
+        // Initial assignment of Data, with no newData
         if (newData == null) {
             cursor = 0;
             index = data.length - 1;
@@ -181,6 +213,7 @@ public class LinkedList<T> implements GameList<T> {
         }
         return last;
     }
+
 
     /**
      * @return T
@@ -204,7 +237,6 @@ public class LinkedList<T> implements GameList<T> {
      */
     @Override
     public boolean find(T item) {
-        // TODO: rewrite for to foreach
         for (int i = 0; i < newData.length; i++) {
             String compare = newData[i].toString();
             if (compare.equals(item.toString())) {
@@ -215,11 +247,20 @@ public class LinkedList<T> implements GameList<T> {
         cursor = newData.length;
         return false;
     }
+    /**
+     * There is time inefficiency to find() because it needs to
+     * loop through all the elements of the array. An O(logn) Binary search
+     * would have been an ideal implementation but that would mean a sorting
+     * function would have to be implemented to allow binary search which
+     * can be time inefficient as well. If sort were to be implemented, it
+     * has to be called only before find(), otherwise it would be counter productive.
+     *
+     */
 
     /**
      * @return Boolean
      *
-     * Run-time complexit: O(n) constant
+     * Run-time complexity: O(n) constant
      */
     @Override
     public boolean isEmpty() {
