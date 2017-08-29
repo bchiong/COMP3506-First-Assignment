@@ -30,16 +30,30 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
      */
     @Override
     public boolean add(T item) {
-        boolean return_value;
-        try {
-            bagArray[cursor] = item;
-            return_value = true;
-            cursor = cursor + 1;
-        } catch (IndexOutOfBoundsException e) {
-            return false;
+        boolean return_value = false;
+        for (int i = 0; i < bagArray.length; i++) {
+            if (bagArray[i] == null) {
+                try {
+                    bagArray[cursor] = item;
+                    return_value = true;
+                    cursor = cursor + 1;
+                } catch (IndexOutOfBoundsException e) {
+                    return_value = false;
+                }
+                break;
+            }
         }
         return return_value;
     }
+
+    /**
+     * Justification
+     * Because the array contains fixed size, removing it would contain null elements.
+     * Iterating the array until the first null element is found, and add the element. To shorten or increase
+     * run-time efficiency, a break in the loop is added. Although it is better to append new elements,
+     * in this case it was written to make sure no null elements are in between non-null elements.
+     * This can eventually contribute to less number of iterations.
+     */
 
     /**
      * @param item The item to be removed.
@@ -61,10 +75,16 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
     }
 
     /**
+     * Justification
+     * Remove function is expensive in this case as it can remove elements anywhere.
+     * This leaves some inefficiencies for other methods like firstItem().
+     */
+
+    /**
      * @return T
      * first item in the bag
      *
-     * Run-time efficiency: Constant time (TBD)
+     * Run-time efficiency: O(n) linear
      */
     @Override
     public T firstItem() {
@@ -75,8 +95,12 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
                 break;
             }
         }
-        return bagArray[cursor]; // not necessarily the first element
+        return bagArray[cursor];
     }
+
+    /**
+     * Same justification as add(T item)
+     */
 
     /**
      * @return T
@@ -99,6 +123,10 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
     }
 
     /**
+     * Same justification as add(T item)
+     */
+
+    /**
      * @return boolean
      * if the cursor points to the last element
      *
@@ -119,6 +147,10 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
     }
 
     /**
+     * Same justification as add(T item)
+     */
+
+    /**
      * @return int
      * total non-null elements
      *
@@ -134,4 +166,8 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
         }
         return size_count;
     }
+
+    /**
+     * Same justification as add(T item)
+     */
 }
