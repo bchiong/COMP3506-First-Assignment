@@ -1,7 +1,5 @@
 package au.edu.uq.itee.comp3506.assn1.adts;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import au.edu.uq.itee.comp3506.assn1.gameworld.GameObject;
@@ -29,6 +27,29 @@ public class MyFixedSizeBagTest {
 	}
 
 	@Test
+    public void removeItemInBag() {
+        GameObject item1ToAdd = new GameObject("Item 1 to be Added");
+        GameObject item2ToAdd = new GameObject("Item 2 to be Added");
+        GameObject item3ToAdd = new GameObject("Item 3 to be Added");
+        bag.add(item1ToAdd);
+        bag.add(item2ToAdd);
+        bag.add(item3ToAdd);
+        assertTrue(bag.remove(item2ToAdd));
+    }
+
+    @Test
+    public void removeItemInBag2() {
+        GameObject item1ToAdd = new GameObject("Item 1 to be Added");
+        GameObject item2ToAdd = new GameObject("Item 2 to be Added");
+        GameObject item3ToAdd = new GameObject("Item 3 to be Added");
+        GameObject item4ToRemove = new GameObject("Item 4 to be Removed");
+        bag.add(item1ToAdd);
+        bag.add(item2ToAdd);
+        bag.add(item3ToAdd);
+        assertFalse(bag.remove(item4ToRemove));
+    }
+
+	@Test
 	public void firstItemBag() {
 		GameObject item1ToAdd = new GameObject("Item 1 to be Added");
 		GameObject item2ToAdd = new GameObject("Item 2 to be Added");
@@ -51,5 +72,17 @@ public class MyFixedSizeBagTest {
         bag.add(item3ToAdd);
         assertEquals("Removing the first element would have the next element as first",
                 bag.firstItem(), item1ToAdd);
+    }
+
+    @Test
+    public void nextItemBag() {
+        GameObject item1ToAdd = new GameObject("Item 1 to be Added");
+        GameObject item2ToAdd = new GameObject("Item 2 to be Added");
+        GameObject item3ToAdd = new GameObject("Item 3 to be Added");
+        bag.add(item1ToAdd);
+        bag.add(item2ToAdd);
+        bag.add(item3ToAdd);
+        bag.firstItem();
+        assertEquals(bag.nextItem(), item2ToAdd);
     }
 }

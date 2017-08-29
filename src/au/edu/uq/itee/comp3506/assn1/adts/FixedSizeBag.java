@@ -68,14 +68,14 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
      */
     @Override
     public T firstItem() {
-        int pos = 0;
+
         for (int i = 0; i < bagArray.length; i++) {
             if (bagArray[i] != null) {
-                pos = i;
+                cursor = i;
                 break;
             }
         }
-        return bagArray[pos]; // not necessarily the first element
+        return bagArray[cursor]; // not necessarily the first element
     }
 
     /**
@@ -86,11 +86,15 @@ public class FixedSizeBag<T> implements RemovableBag<T> {
      */
     @Override
     public T nextItem() {
-        if (bagArray != null && bagArray.length != 1) {
-            cursor = cursor + 1;
-            return bagArray[cursor + 1];
-        } else {
-            throw new ArrayIndexOutOfBoundsException("No next element");
+        try {
+            if (bagArray != null && bagArray.length != 1) {
+                cursor = cursor + 1;
+                return bagArray[cursor];
+            } else {
+                return null;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
         }
     }
 
