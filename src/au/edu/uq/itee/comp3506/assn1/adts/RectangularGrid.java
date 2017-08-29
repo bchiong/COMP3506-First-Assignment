@@ -34,6 +34,7 @@ public class RectangularGrid<T> implements Grid<T> {
                 data[y][x] = item;
     }
 
+
     /**
      * @param x X Coordinate of the position of the item.
      * @param y Y Coordinate of the position of the item.
@@ -53,4 +54,17 @@ public class RectangularGrid<T> implements Grid<T> {
         }
         return returnValue;
     }
+
+    /**
+     * Justification
+     * Array of an array implementation to replicate a grid data structure
+     * To assign an element in the 2d array would simply index [x][y], which means it runs in
+     * constant time. However, to retrieve an element, the 2D array needs to be looped through.
+     * The area of the rectangular or the total size of the 2D array needs to be instantiated
+     * at runtime. This can be highly inefficient when storing a few elements, and can
+     * be problematic when the data input is more than the declared size.
+     *
+     * In the game's context, the dimensions are capped off to 12 and 4, so looping through the entire array
+     * elements would not post any run-time or memory inefficiency.
+     */
 }
