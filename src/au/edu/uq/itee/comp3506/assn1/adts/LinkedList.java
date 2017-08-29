@@ -86,9 +86,13 @@ public class LinkedList<T> implements GameList<T> {
     @Override
     public boolean isLast() {
         boolean return_value = false;
-        if ((data != null && newData == null) || cursor == newData.length - 1) {
-            return true;
-        } else if (data == null && newData == null) {
+        try {
+            if ((data != null && newData == null) || cursor == newData.length - 1) {
+                return true;
+            } else if (data == null && newData == null) {
+                return_value = false;
+            }
+        } catch(NullPointerException e) {
             return_value = false;
         }
         return return_value;

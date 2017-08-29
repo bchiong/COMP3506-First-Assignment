@@ -20,7 +20,7 @@ public class MyLinkedListTest {
     }
 
     @Test
-    public void addTwoItems() {
+    public void addThreeItems() {
         GameObject item1ToAdd = new GameObject("Item 1");
         GameObject item2ToAdd = new GameObject("Item 2");
         GameObject item3ToAdd = new GameObject("Item 3");
@@ -50,6 +50,18 @@ public class MyLinkedListTest {
                 list.getFirst(), is(equalTo(item1ToAdd)));
         assertThat("The last item added to the list is not the last item in the list.",
                 list.getLast(), is(equalTo(item2ToAdd)));
+    }
+
+    @Test
+    public void isLastItem() {
+        assertFalse(list.isLast());
+    }
+
+    @Test
+    public void isLastItem2() {
+        GameObject item1ToAdd = new GameObject("Item 1");
+        list.addToEnd(item1ToAdd);
+        assertTrue(list.isLast());
     }
 
     @Test
@@ -95,19 +107,22 @@ public class MyLinkedListTest {
     @Test
     public void findTest() {
         GameObject[] items = new GameObject[]{
-                new GameObject("50"),
-                new GameObject("Crumpled paper"),
-                new GameObject("Steel Armour"),
-                new GameObject("5 flagons"),
-                new GameObject("Magic bow"),
-                new GameObject("Obsidian Shard")
+                new GameObject("Steel room"),
+                new GameObject("Fire room"),
+                new GameObject("Earth room"),
+                new GameObject("Drill room"),
+                new GameObject("Scissors room"),
+                new GameObject("Final boss room")
         };
 
         for (GameObject item : items) {
             list.insert(item);
         }
-        GameObject itemToSearch = new GameObject("Crumpled paper");
+        GameObject itemToSearch = new GameObject("Drill room");
+        GameObject itemToSearch2 = new GameObject("Magnet room");
         assertThat("Inserting multiple items into an empty list resulted in the cursor refering to the end of the list.",
                 list.find(itemToSearch), is(equalTo(true)));
+        assertThat("Inserting multiple items into an empty list resulted in the cursor refering to the end of the list.",
+                list.find(itemToSearch2), is(equalTo(false)));
     }
 }
